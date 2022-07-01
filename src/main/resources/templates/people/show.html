@@ -10,6 +10,15 @@
     <p th:text="${person.getFullName() + ', ' + person.getYearOfBirth()}"></p>
 </div>
 <br/>
+<div th:if="${person.getBookList().isEmpty()}">
+    <p>Человек пока не взял ни одной книги</p>
+</div>
+<div th:if="${!person.getBookList().isEmpty()}">
+    <p>Книги:</p>
+    <p th:each="book : ${person.getBookList()}" th:text="${book.getTitle() +', '
+    + book.getAuthor() + ', ' + book.getYear()}"></p>
+</div>
+<br/>
 <form th:method="GET" th:action="@{/people/{id}/edit(id=${person.getId()})}">
     <input type="submit" value="Редактировать">
 </form>

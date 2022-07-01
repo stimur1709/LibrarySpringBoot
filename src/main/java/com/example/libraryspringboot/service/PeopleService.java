@@ -19,7 +19,7 @@ public class PeopleService {
     }
 
 
-    public List<Person> index() {
+    public List<Person> findAll() {
         return peopleRepository.findAll();
     }
 

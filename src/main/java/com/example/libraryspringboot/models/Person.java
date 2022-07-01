@@ -1,5 +1,7 @@
 package com.example.libraryspringboot.models;
 
+import org.hibernate.validator.constraints.Range;
+
 import javax.persistence.*;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotEmpty;
@@ -21,7 +23,8 @@ public class Person {
             message = "Введите в формате \"Иванов Иван Иванович\"")
     private String fullName;
 
-    @Min(value = 1990, message = "Год рождения должен быть больше, чем 1900")
+    @Column(nullable = false)
+    @Min(value = 1900, message = "Год рождения должен быть больше, чем 1900")
     private int yearOfBirth;
 
     @OneToMany(mappedBy = "person")
