@@ -6,11 +6,32 @@
 </head>
 <body>
 <h1>Страница со списком всех книг</h1>
-<div th:each="book : ${books}">
+<div th:each="book : ${books.getContent()}">
     <a th:href="@{/books/{id}(id=${book.getId()})}" th:text="${book.getTitle() +', '
     + book.getAuthor() + ', ' + book.getYear()}"></a>
 </div>
 <br/>
+<div th:if="${books.getTotalPages() > 0}">
+    <label for="limit">Выберите количество книг отображаемых на странице</label>
+    <form th:method="GET" th:action="@{'/books/?offset=0&limit=' + {i}(i=limit)}">
+        <select id="limit">
+            <option>5</option>
+            <option>10</option>
+            <option>15</option>
+            <option>20</option>
+        </select>
+    </form>
+    <input type="submit" value="Выбрать">
+    <a th:href="@{'/books/?offset=' + ${books.getNumber()} + '&limit=5'}" th:text="5"></a>
+    <a th:href="@{'/books/?offset=' + ${books.getNumber()} + '&limit=10'}" th:text="10"></a>
+    <a th:href="@{'/books/?offset=' + ${books.getNumber()} + '&limit=15'}" th:text="15"></a>
+    <a th:href="@{'/books/?offset=' + ${books.getNumber()} + '&limit=20'}" th:text="20"></a>
+    <a th:href="@{'/books/?offset=' + ${books.getNumber()} + '&limit=25'}" th:text="25"></a>
+
+    <p th:each="pageNumder : ${numbers}" th:class="${pageNumder == books.getNumber()} ? active">
+        <a th:href="@{'/books/?offset=' + ${pageNumder}}" th:text="${pageNumder + 1}"></a>
+    </p>
+</div>
 <div>
     <a th:href="@{/books/new}">Добавить книгу</a>
 </div>

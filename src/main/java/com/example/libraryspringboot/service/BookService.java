@@ -4,12 +4,13 @@ import com.example.libraryspringboot.models.Book;
 import com.example.libraryspringboot.models.Person;
 import com.example.libraryspringboot.repository.BookRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Date;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class BookService {
@@ -21,8 +22,9 @@ public class BookService {
         this.bookRepository = bookRepository;
     }
 
-    public List<Book> getBooks() {
-        return bookRepository.findAll();
+    public Page<Book> getBooks(int offset, int limit) {
+        Pageable nextPage = PageRequest.of(offset, limit);
+        return bookRepository.findAll(nextPage);
     }
 
     public void save(Book book) {

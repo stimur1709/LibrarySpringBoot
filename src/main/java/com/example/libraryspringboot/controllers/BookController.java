@@ -5,12 +5,14 @@ import com.example.libraryspringboot.models.Person;
 import com.example.libraryspringboot.service.BookService;
 import com.example.libraryspringboot.service.PeopleService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.stream.IntStream;
 
 @Controller
 @RequestMapping("/books")
@@ -25,9 +27,13 @@ public class BookController {
         this.peopleService = peopleService;
     }
 
-    @GetMapping
-    public String getBooksPage(Model model) {
-        model.addAttribute("books", bookService.getBooks());
+    @GetMapping()
+    public String getBooksPage(Model model,
+                               @RequestParam(value = "offset", required = false, defaultValue = "0") int offset,
+                               @RequestParam(value = "limit", required = false, defaultValue = "10") int limit) {
+        Page<Book> books = bookService.getBooks(offset, limit);
+        model.addAttribute("books", books);
+        model.addAttribute("numbers", IntStream.range(0, books.getTotalPages()).toArray());
         return "books/index";
     }
 
