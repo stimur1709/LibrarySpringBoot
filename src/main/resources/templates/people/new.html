@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Страница добавления человека</title>
+    <link rel="stylesheet" th:href="@{/style.css}">
 </head>
 <body>
 <form th:method="POST" th:action="@{/people/new}" th:object="${person}">

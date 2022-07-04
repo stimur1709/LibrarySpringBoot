@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Страница Редактирования человека</title>
+    <link rel="stylesheet" th:href="@{/style.css}">
 </head>
 <body>
 <form th:method="PATCH" th:action="@{/people/{id}/edit(id=${person.getId()})}" th:object="${person}">

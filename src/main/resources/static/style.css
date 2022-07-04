@@ -1,0 +1,24 @@
+.container {
+
+}
+
+.pagination {
+    display: flex;
+}
+
+a, a:visited {
+    text-decoration: none;
+    color: red;
+}
+
+.active {
+    color: blue !important;
+    border: 1px solid red;
+    background-color: red;
+    border-radius: 50%;
+    padding: 1px 6px;
+}
+
+.pagination a {
+    margin-right: 5px;
+}
