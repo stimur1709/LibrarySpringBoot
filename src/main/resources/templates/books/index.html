@@ -25,7 +25,7 @@
         <div class="pagination">
             <p>Выберите станицу: </p>
             <p th:each="numberPage : ${numbersPage}">
-                <a th:class="${numberPage == books.getNumber()} ? 'active'"
+                <a th:class="${numberPage == books.getNumber()} ? active"
                    th:href="@{'/books/?offset=' + ${numberPage} + '&limit=' + ${books.getSize()}}"
                    th:text="${numberPage + 1}"></a>
             </p>

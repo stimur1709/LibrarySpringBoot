@@ -3,6 +3,9 @@ package com.example.libraryspringboot.service;
 import com.example.libraryspringboot.models.Person;
 import com.example.libraryspringboot.repository.PeopleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -18,6 +21,11 @@ public class PeopleService {
         this.peopleRepository = peopleRepository;
     }
 
+
+    public Page<Person> findAll(int offset, int limit) {
+        Pageable nextPage = PageRequest.of(offset, limit);
+        return peopleRepository.findAll(nextPage);
+    }
 
     public List<Person> findAll() {
         return peopleRepository.findAll();

@@ -4,12 +4,15 @@ import com.example.libraryspringboot.models.Person;
 import com.example.libraryspringboot.service.PeopleService;
 import com.example.libraryspringboot.util.PersonValidation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.Arrays;
+import java.util.stream.IntStream;
 
 @Controller
 @RequestMapping("/people")
@@ -25,8 +28,13 @@ public class PeopleController {
     }
 
     @GetMapping
-    public String index(Model model) {
-        model.addAttribute("people", peopleService.findAll());
+    public String index(Model model,
+                        @RequestParam(value = "offset", required = false, defaultValue = "0") int offset,
+                        @RequestParam(value = "limit", required = false, defaultValue = "5") int limit) {
+        Page<Person> people = peopleService.findAll(offset, limit);
+        model.addAttribute("people", people);
+        model.addAttribute("numbersPage", IntStream.range(0, people.getTotalPages()).toArray());
+        model.addAttribute("numbersSize", Arrays.asList(5, 10, 25, 50));
         return "people/index";
     }
 
@@ -61,7 +69,7 @@ public class PeopleController {
     @PatchMapping("/{id}/edit")
     public String change(@PathVariable("id") int id, @ModelAttribute("person") @Valid Person person,
                          BindingResult bindingResult) {
-        if(bindingResult.hasErrors())
+        if (bindingResult.hasErrors())
             return "people/edit";
         peopleService.change(id, person);
         return "redirect:/people";

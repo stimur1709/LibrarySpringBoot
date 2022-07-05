@@ -34,7 +34,6 @@ public class BookController {
                                @RequestParam(value = "limit", required = false, defaultValue = "10") int limit) {
         Page<Book> books = bookService.getBooks(offset, limit);
         model.addAttribute("books", books);
-        System.out.println(books.getSize());
         model.addAttribute("numbersPage", IntStream.range(0, books.getTotalPages()).toArray());
         model.addAttribute("numbersSize", Arrays.asList(5, 10, 25, 50));
         return "books/index";

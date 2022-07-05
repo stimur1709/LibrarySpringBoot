@@ -7,10 +7,29 @@
 </head>
 <body>
 <h1>Страница со списком всех людей</h1>
-<div th:each="person : ${people}">
-    <a th:href="@{/people/{id}(id=${person.getId()})}" th:text="${person.getFullName() + ', ' + person.getYearOfBirth()}"></a>
+<div th:each="person : ${people.getContent()}">
+    <a th:href="@{/people/{id}(id=${person.getId()})}"
+       th:text="${person.getFullName() + ', ' + person.getYearOfBirth()}"></a>
 </div>
 <br/>
+<div th:if="${people.getTotalPages() > 0}">
+    <div class="pagination">
+        <label>Выберите количество человек отображаемых на странице </label>
+        <div th:each="size : ${numbersSize}">
+            <a th:class="${size == people.getSize()} ? active"
+               th:href="@{'/people?offset=' + ${people.getNumber()} + '&limit=' + ${size}}"
+               th:text="${size}"></a>
+        </div>
+    </div>
+
+    <div class="pagination">
+        <p>Выберите страницу </p>
+        <p th:each="numberPage : ${numbersPage}">
+            <a th:class="${numberPage == people.getNumber()} ? active"
+               th:href="@{'/people?offset=' + ${numberPage} + '&limit=' + ${people.getSize()}}"
+               th:text="${numberPage + 1}"> </a></p>
+    </div>
+</div>
 <div>
     <a th:href="@{/people/new}">Добавить человека</a>
 </div>
