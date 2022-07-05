@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -22,8 +23,10 @@ public class BookService {
         this.bookRepository = bookRepository;
     }
 
-    public Page<Book> getBooks(int offset, int limit) {
-        Pageable nextPage = PageRequest.of(offset, limit);
+    public Page<Book> getBooks(int offset, int limit, String sortField, String sortDesc) {
+        Sort sort = sortDesc.equalsIgnoreCase(Sort.Direction.ASC.name()) ? Sort.by(sortField).ascending() :
+                Sort.by(sortField).descending();
+        Pageable nextPage = PageRequest.of(offset, limit, sort);
         return bookRepository.findAll(nextPage);
     }
 
@@ -57,5 +60,9 @@ public class BookService {
     @Transactional
     public void release(int id) {
         bookRepository.findById(id).ifPresent(book -> book.setPerson(null));
+    }
+
+    public List<Book> searchByTitle(String query) {
+        return bookRepository.findByTitleStartingWith(query);
     }
 }

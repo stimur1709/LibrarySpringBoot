@@ -27,14 +27,23 @@ public class PeopleController {
         this.personValidation = personValidation;
     }
 
+    //&sortField=fullName&sortDir=asc
     @GetMapping
     public String index(Model model,
                         @RequestParam(value = "offset", required = false, defaultValue = "0") int offset,
-                        @RequestParam(value = "limit", required = false, defaultValue = "5") int limit) {
-        Page<Person> people = peopleService.findAll(offset, limit);
-        model.addAttribute("people", people);
-        model.addAttribute("numbersPage", IntStream.range(0, people.getTotalPages()).toArray());
-        model.addAttribute("numbersSize", Arrays.asList(5, 10, 25, 50));
+                        @RequestParam(value = "limit", required = false, defaultValue = "5") int limit,
+                        @RequestParam(value = "sortField", required = false, defaultValue = "fullName") String sortField,
+                        @RequestParam(value = "sortDir", required = false, defaultValue = "asc") String sortDir) {
+        Page<Person> people = peopleService.findAll(offset, limit, sortField, sortDir);
+        model.addAttribute("peopleList", people.getContent());
+        model.addAttribute("sizePage", people.getSize());
+        model.addAttribute("numberPage", people.getNumber());
+        model.addAttribute("numberingOrder", IntStream.range(0, people.getTotalPages()).toArray());
+        model.addAttribute("totalPage", people.getTotalPages());
+        model.addAttribute("sizingOrder", Arrays.asList(5, 10, 25, 50));
+        model.addAttribute("sortField", sortField);
+        model.addAttribute("sortDir", sortDir);
+        model.addAttribute("reverse", sortDir.equals("asc") ? "desc" : "asc");
         return "people/index";
     }
 
