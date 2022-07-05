@@ -2,7 +2,7 @@
 
 ___
 Веб-приложение учета книг. За основу взято раннее разработанное приложение https://github.com/stimur1709/library,
-переписано на Spring Boot с использованием Hibernate и Spring Data JPA.
+переписанное на Spring Boot с использованием Hibernate и Spring Data JPA.
 ___
 
 # Функционал приложения
