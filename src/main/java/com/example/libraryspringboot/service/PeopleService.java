@@ -64,7 +64,7 @@ public class PeopleService {
         if (person.isPresent()) {
             person.get().getBookList().forEach(book -> {
                 long difference = Math.abs(book.getTimeAssign().getTime() - new Date().getTime());
-                if(difference > 60000)
+                if(difference > 864000000)
                     book.setOverdue(true);
             });
             return person.get().getBookList();
