@@ -1,5 +1,6 @@
 package com.example.libraryspringboot.service;
 
+import com.example.libraryspringboot.models.Book;
 import com.example.libraryspringboot.models.Person;
 import com.example.libraryspringboot.repository.PeopleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,6 +50,7 @@ public class PeopleService {
     }
 
     public void delete(int id) {
+        peopleRepository.getById(id).getBookList().forEach(book -> book.setPerson(null));
         peopleRepository.deleteById(id);
     }
 }

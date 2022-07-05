@@ -12,7 +12,7 @@
 </div>
 <br/>
 <div th:if="${person.getBookList().isEmpty()}">
-    <p>Человек пока не взял ни одной книги</p>
+    <p>Человек пока не взял ни одной книги. <a th:href="@{/books}"> Выбрать книгу?</a></p>
 </div>
 <div th:if="${!person.getBookList().isEmpty()}">
     <p>Книги:</p>
@@ -28,6 +28,6 @@
     <input type="submit" value="Удалить">
 </form>
 <br/>
-<a th:href="@{/books}">Перейти на страницу пользователей</a>
+<a th:href="@{/people}">Перейти на страницу пользователей</a>
 </body>
 </html>
