@@ -12,6 +12,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.Arrays;
 import java.util.stream.IntStream;
 
 @Controller
@@ -33,7 +34,9 @@ public class BookController {
                                @RequestParam(value = "limit", required = false, defaultValue = "10") int limit) {
         Page<Book> books = bookService.getBooks(offset, limit);
         model.addAttribute("books", books);
-        model.addAttribute("numbers", IntStream.range(0, books.getTotalPages()).toArray());
+        System.out.println(books.getSize());
+        model.addAttribute("numbersPage", IntStream.range(0, books.getTotalPages()).toArray());
+        model.addAttribute("numbersSize", Arrays.asList(5, 10, 25, 50));
         return "books/index";
     }
 
