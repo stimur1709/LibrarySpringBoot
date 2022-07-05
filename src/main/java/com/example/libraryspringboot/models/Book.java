@@ -4,6 +4,8 @@ import javax.persistence.*;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
+import java.util.Date;
+
 @Entity
 @Table(name = "book")
 public class Book {
@@ -26,6 +28,13 @@ public class Book {
     @ManyToOne
     @JoinColumn(name = "person_id", referencedColumnName = "id")
     private Person person;
+
+    @Column(name = "time_assign")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date timeAssign;
+
+    @Transient
+    private boolean overdue;
 
     public Book() {
     }
@@ -74,5 +83,21 @@ public class Book {
 
     public void setPerson(Person person) {
         this.person = person;
+    }
+
+    public Date getTimeAssign() {
+        return timeAssign;
+    }
+
+    public void setTimeAssign(Date timeAssign) {
+        this.timeAssign = timeAssign;
+    }
+
+    public boolean isOverdue() {
+        return overdue;
+    }
+
+    public void setOverdue(boolean overdue) {
+        this.overdue = overdue;
     }
 }

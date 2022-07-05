@@ -1,5 +1,6 @@
 package com.example.libraryspringboot.service;
 
+import com.example.libraryspringboot.models.Book;
 import com.example.libraryspringboot.models.Person;
 import com.example.libraryspringboot.repository.PeopleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,9 +9,9 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 public class PeopleService {
@@ -54,5 +55,21 @@ public class PeopleService {
     public void delete(int id) {
         peopleRepository.getById(id).getBookList().forEach(book -> book.setPerson(null));
         peopleRepository.deleteById(id);
+    }
+
+    @Transactional
+    public List<Book> getBooksByPersonId(int id) {
+        Optional<Person> person = peopleRepository.findById(id);
+
+        if (person.isPresent()) {
+            person.get().getBookList().forEach(book -> {
+                long difference = Math.abs(book.getTimeAssign().getTime() - new Date().getTime());
+                if(difference > 60000)
+                    book.setOverdue(true);
+            });
+            return person.get().getBookList();
+        }
+        else
+            return Collections.emptyList();
     }
 }

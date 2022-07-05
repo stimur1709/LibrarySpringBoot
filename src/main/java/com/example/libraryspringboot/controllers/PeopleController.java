@@ -27,7 +27,6 @@ public class PeopleController {
         this.personValidation = personValidation;
     }
 
-    //&sortField=fullName&sortDir=asc
     @GetMapping
     public String index(Model model,
                         @RequestParam(value = "offset", required = false, defaultValue = "0") int offset,
@@ -66,6 +65,7 @@ public class PeopleController {
     @GetMapping("/{id}")
     public String show(@PathVariable("id") int id, Model model) {
         model.addAttribute("person", peopleService.show(id));
+        model.addAttribute("books", peopleService.getBooksByPersonId(id));
         return "people/show";
     }
 

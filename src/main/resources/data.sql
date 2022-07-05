@@ -20,7 +20,7 @@ insert into book (author, title, year) values ('Джордж Оруэлл', '198
 insert into book (author, title, year) values ('Грегори Дэвид Робертс', 'Шантарам', 1956);
 insert into book (author, title, year) values ('Эрих Мария Ремарк', 'Три товарища', 1944);
 
-insert into person (full_name, year_of_birth) VALUES ('ыыыы', 1994);
+insert into person (full_name, year_of_birth) VALUES ('Сафин Тимур Ринатович', 1994);
 insert into person (full_name, year_of_birth) VALUES ('Терентьев Герасим Андреевич', 2004);
 insert into person (full_name, year_of_birth) VALUES ('Шашков Глеб Михаилович', 1995);
 insert into person (full_name, year_of_birth) VALUES ('Максимов Агафон Дамирович', 1990);

@@ -11,6 +11,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -54,12 +55,18 @@ public class BookService {
 
     @Transactional
     public void assign(int id, Person person) {
-        bookRepository.findById(id).ifPresent(book -> book.setPerson(person));
+        bookRepository.findById(id).ifPresent(book -> {
+            book.setPerson(person);
+            book.setTimeAssign(new Date());
+        });
     }
 
     @Transactional
     public void release(int id) {
-        bookRepository.findById(id).ifPresent(book -> book.setPerson(null));
+        bookRepository.findById(id).ifPresent(book -> {
+            book.setPerson(null);
+            book.setTimeAssign(null);
+        });
     }
 
     public List<Book> searchByTitle(String query) {

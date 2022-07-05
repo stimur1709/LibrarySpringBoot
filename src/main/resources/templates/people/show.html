@@ -11,13 +11,14 @@
     <p th:text="${person.getFullName() + ', ' + person.getYearOfBirth()}"></p>
 </div>
 <br/>
-<div th:if="${person.getBookList().isEmpty()}">
+<div th:if="${books.isEmpty()}">
     <p>Человек пока не взял ни одной книги. <a th:href="@{/books}"> Выбрать книгу?</a></p>
 </div>
-<div th:if="${!person.getBookList().isEmpty()}">
+<div th:if="${!books.isEmpty()}">
     <p>Книги:</p>
-    <p th:each="book : ${person.getBookList()}" th:text="${book.getTitle() +', '
-    + book.getAuthor() + ', ' + book.getYear()}"></p>
+    <p th:each="book : ${person.getBookList()}"
+       th:style="${book.isOverdue()} ? 'color : red'"
+       th:text="${book.getTitle() + ', ' + book.getAuthor() + ', ' + book.getYear()}"></p>
 </div>
 <br/>
 <form th:method="GET" th:action="@{/people/{id}/edit(id=${person.getId()})}">
