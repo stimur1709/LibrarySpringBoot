@@ -114,8 +114,7 @@ public class BookController {
 
     @PostMapping("/search")
     public String makeSearch(Model model, @RequestParam("query") String query) {
-        System.out.println(query + "!!!!");
-        model.addAttribute("books", bookService.searchByTitle(query));
+         model.addAttribute("books", bookService.searchByTitle(query));
         return "books/search";
     }
 }
